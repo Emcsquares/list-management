@@ -47,7 +47,4 @@ postcss.config.js
 components.json
 next.config.js
 
-tsconfig.app.json
-tsconfig.spec.json
-
 package-lock.json
