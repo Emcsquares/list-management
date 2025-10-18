@@ -77,6 +77,15 @@
       }
     </section>
 
+    <!-- Clear Completed -->
+    @if (hasCompletedItems()) {
+    <section class="clear-section">
+      <button class="btn btn-secondary" (click)="clearCompleted()" aria-label="Clear all completed items">
+        Clear Completed
+      </button>
+    </section>
+    }
+
   </main>
 
   <app-toast-host />

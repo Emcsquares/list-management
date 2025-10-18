@@ -103,4 +103,40 @@ export class AppComponent implements OnInit {
   private saveItems(): void {
     this.storageService.saveItems(this.items())
   }
+
+  deleteItem(item: Item): void {
+    this.items.update((items) => items.filter((i) => i.id !== item.id))
+    this.saveItems()
+    this.toastService.show("Item deleted")
+  }
+
+  clearCompleted(): void {
+    const completedCount = this.items().filter((i) => i.done).length
+    if (completedCount === 0) return
+
+    this.items.update((items) => items.filter((i) => !i.done))
+    this.saveItems()
+    this.toastService.show(`Cleared ${completedCount} completed item${completedCount > 1 ? "s" : ""}`)
+  }
+
+  setFilter(filter: FilterType): void {
+    this.currentFilter.set(filter)
+  }
+
+  onNewItemKeydown(event: KeyboardEvent): void {
+    if (event.key === "Enter") {
+      event.preventDefault()
+      this.addItem()
+    }
+  }
+
+  onEditKeydown(event: KeyboardEvent, item: Item): void {
+    if (event.key === "Enter") {
+      event.preventDefault()
+      this.saveEdit(item)
+    } else if (event.key === "Escape") {
+      event.preventDefault()
+      this.cancelEdit()
+    }
+  }
 }
