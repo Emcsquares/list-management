@@ -1,0 +1,25 @@
+<div class="app-container">
+  <header class="app-header">
+    <h1>List Manager</h1>
+  </header>
+
+  <main class="app-main">
+    <!-- Add Item Form -->
+    <section class="add-section">
+      <label for="new-item-input" class="sr-only">Add new item</label>
+      <div class="add-form">
+        <input id="new-item-input" type="text" class="add-input" placeholder="Add a new item..."
+          [ngModel]="newItemText()" (ngModelChange)="newItemText.set($event)" (keydown)="onNewItemKeydown($event)"
+          aria-label="New item text" />
+        <button class="btn btn-primary" (click)="addItem()" [disabled]="isAddButtonDisabled()" aria-label="Add item">
+          Add
+        </button>
+      </div>
+    </section>
+
+    <!-- TODO -->
+
+  </main>
+
+  <app-toast-host />
+</div>
