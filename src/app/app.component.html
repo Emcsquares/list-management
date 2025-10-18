@@ -17,7 +17,65 @@
       </div>
     </section>
 
-    <!-- TODO -->
+    <!-- Items List -->
+    <section class="items-section">
+      @if (filteredItems().length === 0) {
+      <p class="empty-message">
+        @if (currentFilter() === 'all') {
+        No items yet. Add one above!
+        } @else if (currentFilter() === 'active') {
+        No active items.
+        } @else {
+        No completed items.
+        }
+      </p>
+      } @else {
+      <ul class="items-list">
+        @for (item of filteredItems(); track item.id) {
+        <li class="item" [class.item-done]="item.done">
+          <div class="item-content">
+            <input type="checkbox" class="item-checkbox" [id]="'checkbox-' + item.id" [checked]="item.done"
+              (change)="toggleDone(item)"
+              [attr.aria-label]="'Mark ' + item.text + ' as ' + (item.done ? 'active' : 'done')" />
+
+            @if (editingItemId() === item.id) {
+            <div class="edit-form">
+              <label [for]="'edit-input-' + item.id" class="sr-only">Edit item</label>
+              <input [id]="'edit-input-' + item.id" type="text" class="edit-input" [ngModel]="editingText()"
+                (ngModelChange)="editingText.set($event)" (keydown)="onEditKeydown($event, item)"
+                [attr.aria-label]="'Edit ' + item.text" />
+              <div class="edit-actions">
+                <button class="btn btn-sm btn-primary" (click)="saveEdit(item)"
+                  [disabled]="editingText().trim().length === 0" aria-label="Save changes">
+                  Save
+                </button>
+                <button class="btn btn-sm btn-secondary" (click)="cancelEdit()" aria-label="Cancel editing">
+                  Cancel
+                </button>
+              </div>
+            </div>
+            } @else {
+            <label [for]="'checkbox-' + item.id" class="item-text" [class.line-through]="item.done">
+              {{ item.text }}
+            </label>
+
+            <div class="item-actions">
+              <button class="btn btn-sm btn-secondary" (click)="startEdit(item)"
+                [attr.aria-label]="'Edit ' + item.text">
+                Edit
+              </button>
+              <button class="btn btn-sm btn-danger" (click)="deleteItem(item)"
+                [attr.aria-label]="'Delete ' + item.text">
+                Delete
+              </button>
+            </div>
+            }
+          </div>
+        </li>
+        }
+      </ul>
+      }
+    </section>
 
   </main>
 

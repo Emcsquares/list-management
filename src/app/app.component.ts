@@ -43,5 +43,64 @@ export class AppComponent implements OnInit {
     private toastService: ToastService,
   ) { }
 
-  // TODO Storage, etc
+  ngOnInit(): void {
+    const loadedItems = this.storageService.loadItems()
+    this.items.set(loadedItems)
+  }
+
+  private generateId(): string {
+    if (typeof crypto !== "undefined" && crypto.randomUUID) {
+      return crypto.randomUUID()
+    }
+    return `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
+  }
+
+  addItem(): void {
+    const text = this.newItemText().trim()
+    if (!text) return
+
+    const newItem: Item = {
+      id: this.generateId(),
+      text,
+      done: false,
+      createdAt: Date.now(),
+      updatedAt: Date.now(),
+    }
+
+    this.items.update((items) => [...items, newItem])
+    this.saveItems()
+    this.newItemText.set("")
+    this.toastService.show("Item added")
+  }
+
+  startEdit(item: Item): void {
+    this.editingItemId.set(item.id)
+    this.editingText.set(item.text)
+  }
+
+  saveEdit(item: Item): void {
+    const text = this.editingText().trim()
+    if (!text) return
+
+    this.items.update((items) => items.map((i) => (i.id === item.id ? { ...i, text, updatedAt: Date.now() } : i)))
+    this.saveItems()
+    this.cancelEdit()
+    this.toastService.show("Item updated")
+  }
+
+  cancelEdit(): void {
+    this.editingItemId.set(null)
+    this.editingText.set("")
+  }
+
+  toggleDone(item: Item): void {
+    this.items.update((items) =>
+      items.map((i) => (i.id === item.id ? { ...i, done: !i.done, updatedAt: Date.now() } : i)),
+    )
+    this.saveItems()
+  }
+
+  private saveItems(): void {
+    this.storageService.saveItems(this.items())
+  }
 }
