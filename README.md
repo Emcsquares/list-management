@@ -1,16 +1,18 @@
 # List Manager
 
-Angular 17 single-page application for managing lists with local persistence.
+Single-page application for managing lists with local persistence.
+
+Site link: [Deployment List Manager](https://fast.com)
 
 ## Features
 
-- ✅ **CRUD Operations**: Add, edit, toggle, and delete items
-- 🔍 **Filters**: View all, active, or completed items
-- 💾 **Local Persistence**: All data saved to local storage
-- 🎯 **Validation**: Prevents empty items, trims whitespace
-- 🔔 **Toast Notifications**: Lightweight feedback for all actions
-- ♿ **Accessible**: Keyboard navigation, focus states
-- 📱 **Responsive**: Works on mobile and desktop
+- **CRUD Operations**: Add, edit, toggle, and delete items
+- **Filters**: View all, active, or completed items
+- **Local Persistence**: All data saved to local storage
+- **Validation**: Prevents empty items, trims whitespace
+- **Toast Notifications**: Lightweight feedback for all actions
+- **Accessible**: Keyboard navigation, focus states
+- **Responsive**: Works on mobile and desktop
 
 ## Quick Start
 
@@ -20,42 +22,38 @@ Angular 17 single-page application for managing lists with local persistence.
 
 ### Installation
 
-\`\`\`bash
 # Install dependencies
+```bash
 npm install
+```
 
 # Start development server
+```bash
 npm start
-# or
-ng serve -o
-\`\`\`
-
-The app will open at `http://localhost:4200`
+```
 
 ### Build for Production
 
-\`\`\`bash
+```bash
 npm run build:prod
-# or
-ng build --configuration=production
-\`\`\`
+```
 
 Output will be in `dist/list-manager/browser/`
 
 ## Storage
 
 All items are persisted to localStorage under the key:
-\`\`\`
+```
 list-manager:v1:items
-\`\`\`
+```
 
 Data is automatically loaded on app initialization and saved after every change.
 
 ## Toast Behavior
 
 - Toast messages appear for: add, update, delete, and clear completed actions
-- Auto-dismiss after 2.5 seconds
-- Accessible via ARIA live region (`role="status"`, `aria-live="polite"`)
+- Auto-dismiss
+- Accessible via ARIA live region
 - Smooth slide-in and fade-out animations
 
 ## Keyboard Shortcuts
@@ -67,7 +65,7 @@ Data is automatically loaded on app initialization and saved after every change.
 
 ## Project Structure
 
-\`\`\`
+```
 src/
 ├── app/
 │   ├── components/
@@ -83,7 +81,7 @@ src/
 ├── main.ts                            # Bootstrap
 ├── index.html                         # HTML shell
 └── styles.css                         # Global styles
-\`\`\`
+```
 
 ## Technology Stack
 
